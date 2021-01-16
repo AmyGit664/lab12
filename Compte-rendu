@@ -1,0 +1,28 @@
+************************************************************************************************
+******************************* lab12: U-boot sur une Mini-Sdcard ******************************
+************************************************************************************************
+
+
+L'objectif de ce lab est de créer une carte micro-SD amorçable ou bootable qui contiendra linux.
+
+Avant de débuter, le bootage nécessite un chargeur de démarrage noyau linuxqui est également un
+BIOS nommé "u-boot". Ensuite, il faut repérer le fichier de defconfig associé àla carte. En effet,
+chaque carte a son propre fichier de defconfig. Pour chercher ce fichier, il suffit de faire:
+"ls *| grep black" => am335x_boneblack_defconfig.
+
+Après avoir tapé la commande "make am335x_boneblack_deconfig" et "ls -a", on retrouve un fichier 
+".config" C'est ce fichier qui permet de configurer le noyau. En effet, il est lu et modifié par 
+l'utilitaire de configuration du noyau. On y retrouve beaucoup de variables d'environnement.
+
+Après compilation, deux fichiers importants sont générés: MLO et u-boot.img
+MLO est le 1er programme de démarrage. Il initialise et démarre ensuite u-boot.
+u-boot.img est l'image binaire du bootloader. 
+
+Une fois toutes ces étapes effectuées, la carte peut être préparée pour être bootée. Aès avoir
+branchée la carte sur le PC, la commande "dmesg" ou "sudo fdisk -l" ( en se mettant sur le répertoire
+dev) permettra d'identifier le nom du périphérique => /dev/sdc1.
+Il ne faut pas surtout pas oublier de démonter la partition, d'en recréer une nouvelle sur le même
+disque dans le but de rendre la carte bootable. POur finir, la carte doit être formattée en FAT32.
+
+
+
